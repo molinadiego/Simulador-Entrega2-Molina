@@ -109,7 +109,7 @@ function getCartFromStorage() {
 
 cartBtn.addEventListener("click", () => {
 	if (qty !== 0) {
-		window.open("./cart.html");
+		window.location.href = "cart.html";
 		qty = 0;
 		cartQty.textContent = "🛒 (" + qty + ")";
 		cart = [];
