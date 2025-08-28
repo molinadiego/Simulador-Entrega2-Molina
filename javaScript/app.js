@@ -91,6 +91,9 @@ let products = [
 //const btnAddCart = document.querySelectorAll(".add-to-cart-btn");
 const cartQty = document.querySelector(".cart-btn");
 const cartBtn = document.querySelector(".cart-btn");
+const txtSearch = document.getElementById("txtSearch");
+const btnSearch = document.getElementById("btnSearch");
+
 let qty = 0;
 
 getproductsFromStorage();
@@ -114,6 +117,24 @@ function getCartFromStorage() {
 		cartQty.textContent = "🛒 (" + qty + ")";
 	}
 }
+
+btnSearch.addEventListener("click", (e) => {
+	const search = txtSearch.value;
+	const productSearch = products.filter((item) =>
+		item.name.toLowerCase().includes(search.toLowerCase())
+	);
+	txtSearch.value = "";
+	renderProducts(productSearch);
+});
+
+cartBtn.addEventListener("click", () => {
+	if (qty !== 0) {
+		window.location.href = "cart.html";
+		qty = 0;
+		cartQty.textContent = "🛒 (" + qty + ")";
+		cart = [];
+	}
+});
 
 /**
  *
@@ -154,22 +175,15 @@ function fillCart(name, quantity) {
 	}
 }
 
-cartBtn.addEventListener("click", () => {
-	if (qty !== 0) {
-		window.location.href = "cart.html";
-		qty = 0;
-		cartQty.textContent = "🛒 (" + qty + ")";
-		cart = [];
-	}
-});
-
 //renderizando los productos.
 
-function renderProducts() {
+function renderProducts(productsParam) {
 	const productContainerVino = document.querySelector(".product-grid-vino");
 	const productContainerWhisky = document.querySelector(".product-grid-whisky");
+	productContainerVino.innerHTML = "";
+	productContainerWhisky.innerHTML = "";
 
-	products.forEach((item) => {
+	productsParam.forEach((item) => {
 		const img = document.createElement("img");
 		img.setAttribute("src", item.image);
 		img.setAttribute("alt", item.description + " " + item.name);
@@ -226,11 +240,9 @@ function renderProducts() {
 				localStorage.setItem("cart", JSON.stringify(cart));
 				localStorage.setItem("products", JSON.stringify(products));
 			}
-			productContainerVino.innerHTML = "";
-			productContainerWhisky.innerHTML = "";
-			renderProducts();
+			renderProducts(products);
 		});
 	});
 }
 
-renderProducts();
+renderProducts(products);

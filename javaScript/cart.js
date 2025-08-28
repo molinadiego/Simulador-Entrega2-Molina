@@ -41,7 +41,7 @@ function getCartFromStorage() {
 
 const btnBack = document.getElementById("btnBack");
 btnBack.addEventListener("click", () => {
-	if (btnBack.textContent === "Pagar") {
+	if (btnBack.textContent !== "Salir") {
 		localStorage.removeItem("cart");
 	}
 });

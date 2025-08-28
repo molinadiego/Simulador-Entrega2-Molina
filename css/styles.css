@@ -8,6 +8,11 @@
 	--shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+input:focus,
+textarea:focus {
+	outline: none;
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -65,6 +70,28 @@ body {
 	padding: 0.5rem 1rem;
 	border-radius: 5px;
 	font-size: 1rem;
+}
+
+#txtSearch {
+	border-color: var(--primary-color);
+	border-bottom-width: 2px;
+	padding: 0.3rem 1rem;
+	font-family: "Georgia", sefif;
+	text-decoration-color: var(--primary-color);
+	font-size: 14px;
+	text-align: left;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	resize: none;
+}
+
+#btnSearch {
+	background-color: var(--primary-color);
+	color: white;
+	font-family: "Georgia", sefif;
+	padding: 0.3rem 1rem;
+	border-radius: 5px;
 }
 
 /* Banner Principal */
