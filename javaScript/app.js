@@ -1,5 +1,3 @@
-//const TAX = 1.084;
-//const DISCOUNT = 0.1;
 let cart = [];
 let tax = 0;
 let priceTotal = 0;
@@ -10,6 +8,7 @@ let products = [
 	{
 		id: 1,
 		name: "Unanime",
+		image: "images/unanime.webp",
 		description: "Vino",
 		price: 23,
 		stock: 25,
@@ -17,6 +16,7 @@ let products = [
 	{
 		id: 2,
 		name: "Catena Zapata",
+		image: "images/catena-zapata.webp",
 		description: "Vino",
 		price: 34,
 		stock: 25,
@@ -24,6 +24,7 @@ let products = [
 	{
 		id: 3,
 		name: "Norton",
+		image: "images/norton.webp",
 		description: "Vino",
 		price: 17,
 		stock: 25,
@@ -31,6 +32,7 @@ let products = [
 	{
 		id: 4,
 		name: "Phebus",
+		image: "images/phebus.webp",
 		description: "Vino",
 		price: 10,
 		stock: 25,
@@ -38,6 +40,7 @@ let products = [
 	{
 		id: 5,
 		name: "Ed Edmundo",
+		image: "images/ed-edmundo.webp",
 		description: "Vino",
 		price: 12,
 		stock: 25,
@@ -45,6 +48,7 @@ let products = [
 	{
 		id: 6,
 		name: "Chivas Regal 12 Years",
+		image: "images/chivas12.webp",
 		description: "Whisky",
 		price: 40,
 		stock: 25,
@@ -52,6 +56,7 @@ let products = [
 	{
 		id: 7,
 		name: "Chivas Regal 18 Years",
+		image: "images/chivas18.jpg",
 		description: "Whisky",
 		price: 165,
 		stock: 25,
@@ -59,6 +64,7 @@ let products = [
 	{
 		id: 8,
 		name: "Johnnie Walker Black Label",
+		image: "images/johnnie-black.webp",
 		description: "Whisky",
 		price: 33,
 		stock: 25,
@@ -66,6 +72,7 @@ let products = [
 	{
 		id: 9,
 		name: "Johnnie Walker Green Label",
+		image: "images/johnnie-green.webp",
 		description: "Whisky",
 		price: 61,
 		stock: 25,
@@ -73,6 +80,7 @@ let products = [
 	{
 		id: 10,
 		name: "Johnnie Walker Blue Label",
+		image: "images/johnnie-blue.webp",
 		description: "Whisky",
 		price: 175,
 		stock: 25,
@@ -80,7 +88,7 @@ let products = [
 ];
 
 // Simulador entrega #1.
-const btnAddCart = document.querySelectorAll(".add-to-cart-btn");
+//const btnAddCart = document.querySelectorAll(".add-to-cart-btn");
 const cartQty = document.querySelector(".cart-btn");
 const cartBtn = document.querySelector(".cart-btn");
 let qty = 0;
@@ -104,71 +112,6 @@ function getCartFromStorage() {
 			qty = item.quantity + qty;
 		}
 		cartQty.textContent = "🛒 (" + qty + ")";
-	}
-}
-
-cartBtn.addEventListener("click", () => {
-	if (qty !== 0) {
-		window.location.href = "cart.html";
-		qty = 0;
-		cartQty.textContent = "🛒 (" + qty + ")";
-		cart = [];
-	}
-});
-
-btnAddCart.forEach((btn) => {
-	btn.addEventListener("click", (e) => {
-		const productSeleted = e.target.closest(".product-card");
-		const productName =
-			productSeleted.querySelector(".product-title").textContent;
-		const has = fillCart(productName, 1);
-		if (has !== -1) {
-			qty += 1;
-			cartQty.textContent = "🛒 (" + qty + ")";
-			localStorage.setItem("cart", JSON.stringify(cart));
-			localStorage.setItem("products", JSON.stringify(products));
-		}
-	});
-});
-
-/**
- *
- * @param {Array} products
- */
-function listProducts(products) {
-	console.log("***** LISTA DE PRODUCTOS *****");
-	for (let product of products) {
-		console.log(
-			`ID ${product.id} -- ${product.description} -- ${product.name} -- U$S ${product.price} -- STOCK ${product.stock}`
-		);
-	}
-}
-
-/**
- *
- * @param {Array} products
- */
-function listProductsPrompt(products) {
-	let lista = "";
-	lista = lista + "***** LISTA DE PRODUCTOS *****\n";
-	for (let product of products) {
-		lista =
-			lista +
-			`ID ${product.id} -- ${product.description} -- ${product.name} -- U$S ${product.price} -- STOCK ${product.stock}\n`;
-	}
-	return lista;
-}
-
-/**
- *
- * @param {Array} cart
- */
-function listCart(cart) {
-	console.log("***** LISTA DEL CARRITO *****");
-	for (let item of cart) {
-		console.log(
-			`Producto - ${item.description} -- ${item.name} -- Qty- ${item.quantity} -- Precio Unidad - ${item.price} -- Precio total -${item.totalprice}`
-		);
 	}
 }
 
@@ -211,53 +154,83 @@ function fillCart(name, quantity) {
 	}
 }
 
-/*
-function ticket(cart) {
-	let productQty = 0;
-	let groceryList = "***** Ticket *****\n";
-	for (let item of cart) {
-		groceryList += `\n${item.quantity} - ${item.name} - Unidad $:${item.price} - Total $:${item.totalprice}`;
-		productQty += item.quantity;
-		priceTotal += item.totalprice;
+cartBtn.addEventListener("click", () => {
+	if (qty !== 0) {
+		window.location.href = "cart.html";
+		qty = 0;
+		cartQty.textContent = "🛒 (" + qty + ")";
+		cart = [];
 	}
-	groceryList += `\n Precio total de la compra sin TAX. : $ ${priceTotal}`;
-	priceTotalWithTax = plusTax(priceTotal, TAX);
-	groceryList += `\n Precio total con 8.4% del TAX.     : $ ${priceTotalWithTax.toFixed(
-		2
-	)}`;
-	if (productQty >= 5) {
-		priceWithDiscount = applyDiscount(priceTotalWithTax, DISCOUNT);
-		groceryList += `\n Descuento de 10% (5 productos o mas) -- Total a pagar $:${priceWithDiscount.toFixed(
-			2
-		)}`;
-	}
-	return groceryList;
+});
+
+//renderizando los productos.
+
+function renderProducts() {
+	const productContainerVino = document.querySelector(".product-grid-vino");
+	const productContainerWhisky = document.querySelector(".product-grid-whisky");
+
+	products.forEach((item) => {
+		const img = document.createElement("img");
+		img.setAttribute("src", item.image);
+		img.setAttribute("alt", item.description + " " + item.name);
+
+		const productCard = document.createElement("div");
+		productCard.className = "product-card";
+
+		const productInfo = document.createElement("div");
+		productInfo.className = "product-info";
+
+		const productName = document.createElement("h3");
+		productName.className = "product-title";
+		productName.textContent = item.name;
+
+		const productDescription = document.createElement("p");
+		productDescription.className = "product-description";
+		productDescription.textContent = item.description;
+
+		const productPrecio = document.createElement("p");
+		productPrecio.className = "product-price";
+		productPrecio.textContent = "$ " + item.price;
+
+		const productStock = document.createElement("p");
+		productStock.className = "product-stock";
+		productStock.textContent = "Cantidad disponible: " + item.stock;
+
+		const btnAddCart = document.createElement("button");
+		btnAddCart.className = "add-to-cart-btn";
+		btnAddCart.textContent = "Agregar al carrito";
+
+		productInfo.appendChild(productName);
+		productInfo.appendChild(productDescription);
+		productInfo.appendChild(productPrecio);
+		productInfo.appendChild(productStock);
+		productInfo.appendChild(btnAddCart);
+
+		productCard.appendChild(img);
+		productCard.appendChild(productInfo);
+
+		if (item.description === "Vino") {
+			productContainerVino.appendChild(productCard);
+		} else {
+			productContainerWhisky.appendChild(productCard);
+		}
+
+		btnAddCart.addEventListener("click", (e) => {
+			const productSeleted = e.target.closest(".product-card");
+			const productName =
+				productSeleted.querySelector(".product-title").textContent;
+			const has = fillCart(productName, 1);
+			if (has !== -1) {
+				qty += 1;
+				cartQty.textContent = "🛒 (" + qty + ")";
+				localStorage.setItem("cart", JSON.stringify(cart));
+				localStorage.setItem("products", JSON.stringify(products));
+			}
+			productContainerVino.innerHTML = "";
+			productContainerWhisky.innerHTML = "";
+			renderProducts();
+		});
+	});
 }
-*/
-/*
-/**
- *
- * @param {Number} priceTotal
- * @param {Number} TAX
- * @returns {Number}
 
-*/
-/*
-const plusTax = (priceTotal, TAX) => {
-	return priceTotal * TAX;
-};
-*/
-/*
-/**
- *
- * @param {Number} priceTotalWithTax
- * @param {Number} DISCOUNT
- * @returns
- * 
- */
-/*
-const applyDiscount = (priceTotalWithTax, DISCOUNT) => {
-	return priceTotalWithTax - priceTotalWithTax * DISCOUNT;
-};
-
-*/
+renderProducts();

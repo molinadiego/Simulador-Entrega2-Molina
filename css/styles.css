@@ -70,8 +70,7 @@ body {
 /* Banner Principal */
 .hero-banner {
 	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-		url("https://via.placeholder.com/1600x600/3A2F2B/FFFFFF?text=Bodega+Premium")
-			no-repeat center center/cover;
+		no-repeat center center/cover;
 	color: white;
 	text-align: center;
 	padding: 8rem 1rem;
@@ -117,7 +116,13 @@ body {
 	color: var(--primary-color);
 }
 
-.product-grid {
+.product-grid-vino {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 2rem;
+}
+
+.product-grid-whisky {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 2rem;
@@ -157,6 +162,13 @@ body {
 	font-size: 1.5rem;
 	margin-bottom: 0.5rem;
 	color: var(--primary-color);
+}
+
+.product-stock {
+	font-size: 1rem;
+	color: var(--secondary-color);
+	margin-bottom: 1rem;
+	flex-grow: 1;
 }
 
 .product-description {
