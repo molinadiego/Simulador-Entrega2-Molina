@@ -118,24 +118,6 @@ function getCartFromStorage() {
 	}
 }
 
-btnSearch.addEventListener("click", (e) => {
-	const search = txtSearch.value;
-	const productSearch = products.filter((item) =>
-		item.name.toLowerCase().includes(search.toLowerCase())
-	);
-	txtSearch.value = "";
-	renderProducts(productSearch);
-});
-
-cartBtn.addEventListener("click", () => {
-	if (qty !== 0) {
-		window.location.href = "cart.html";
-		qty = 0;
-		cartQty.textContent = "🛒 (" + qty + ")";
-		cart = [];
-	}
-});
-
 /**
  *
  * @param {String} name
@@ -173,6 +155,32 @@ function fillCart(name, quantity) {
 		alert("Transaccion cancelada. no tenemos suficientes productos.");
 		return -1;
 	}
+}
+
+//Funcion eventlistener.
+function setupEventListeners() {
+	const productContainerVino = document.querySelector(".product-grid-vino");
+	const productContainerWhisky = document.querySelector(".product-grid-whisky");
+	const handleProductClick = (e) => {
+		//verifico si el elemento clickeado es un boton agregar al carrito.
+		if (e.target.classList.contains("add-to-cart-btn")) {
+			const productCard = e.target.closest(".product-card");
+			const productName =
+				productCard.querySelector(".product-title").textContent;
+
+			//llama a la funcion para llenar el carrito.
+			const has = fillCart(productName, 1);
+			if (has !== -1) {
+				qty += 1;
+				cartQty.textContent = "🛒 (" + qty + ")";
+				localStorage.setItem("cart", JSON.stringify(cart));
+				localStorage.setItem("products", JSON.stringify(products));
+			}
+			renderProducts(products);
+		}
+	};
+	productContainerVino.addEventListener("click", handleProductClick);
+	productContainerWhisky.addEventListener("click", handleProductClick);
 }
 
 //renderizando los productos.
@@ -228,21 +236,30 @@ function renderProducts(productsParam) {
 		} else {
 			productContainerWhisky.appendChild(productCard);
 		}
-
-		btnAddCart.addEventListener("click", (e) => {
-			const productSeleted = e.target.closest(".product-card");
-			const productName =
-				productSeleted.querySelector(".product-title").textContent;
-			const has = fillCart(productName, 1);
-			if (has !== -1) {
-				qty += 1;
-				cartQty.textContent = "🛒 (" + qty + ")";
-				localStorage.setItem("cart", JSON.stringify(cart));
-				localStorage.setItem("products", JSON.stringify(products));
-			}
-			renderProducts(products);
-		});
 	});
 }
 
-renderProducts(products);
+btnSearch.addEventListener("click", (e) => {
+	const search = txtSearch.value;
+	const productSearch = products.filter((item) =>
+		item.name.toLowerCase().includes(search.toLowerCase())
+	);
+	txtSearch.value = "";
+	renderProducts(productSearch);
+});
+
+cartBtn.addEventListener("click", () => {
+	if (qty !== 0) {
+		window.location.href = "cart.html";
+		qty = 0;
+		cartQty.textContent = "🛒 (" + qty + ")";
+		cart = [];
+	}
+});
+
+// Llama a esta función una vez al inicio de tu script
+document.addEventListener("DOMContentLoaded", () => {
+	// Asume que 'products' está cargado aquí
+	renderProducts(products);
+	setupEventListeners(); // Llama a la función para configurar el listener
+});
