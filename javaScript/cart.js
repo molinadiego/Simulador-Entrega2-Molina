@@ -4,6 +4,7 @@ const DISCOUNT = 0.1;
 const plusTax = (priceTotal, TAX) => priceTotal * TAX;
 const applyDiscount = (priceTotalWithTax, DISCOUNT) =>
 	priceTotalWithTax * (1 - DISCOUNT);
+const btnBack = document.getElementById("btnBack");
 
 /**
  * Calcula el ticket de la compra.
@@ -34,20 +35,6 @@ function calculateTicket(cart) {
 	};
 }
 
-function getCartFromStorage() {
-	const cartFromStorage = localStorage.getItem("cart");
-	let cart = cartFromStorage ? JSON.parse(cartFromStorage) : [];
-}
-
-const btnBack = document.getElementById("btnBack");
-btnBack.addEventListener("click", () => {
-	if (btnBack.textContent !== "Salir") {
-		localStorage.removeItem("cart");
-	} else {
-		localStorage.removeItem("cart");
-	}
-});
-
 /**
  * Función principal para renderizar el carrito en la página
  */
@@ -67,7 +54,7 @@ function renderCart() {
 		cartItemsContainer.innerHTML = "<p>Tu carrito está vacío.</p>";
 		cartSummaryContainer.innerHTML = "";
 		btnBack.textContent = "Salir";
-		localStorage.removeItem(cart);
+		localStorage.removeItem("cart");
 		return;
 	}
 
@@ -118,7 +105,7 @@ function renderCart() {
 			const itemQty = e.target.getAttribute("data-qty");
 
 			// Obtener el estado actual del carrito
-			let Cart = JSON.parse(localStorage.getItem("cart"));
+			let cart = JSON.parse(localStorage.getItem("cart"));
 			let products = JSON.parse(localStorage.getItem("products"));
 
 			//vuelvo a sumar los productos eliminados del carrito al stock.
@@ -126,10 +113,10 @@ function renderCart() {
 			product.stock = product.stock + parseInt(itemQty);
 
 			// Filtrar el carrito para eliminar el ítem
-			Cart = Cart.filter((item) => item.name !== itemRemove);
+			cart = cart.filter((item) => item.name !== itemRemove);
 
 			// Guardar el carrito actualizado
-			localStorage.setItem("cart", JSON.stringify(Cart));
+			localStorage.setItem("cart", JSON.stringify(cart));
 			localStorage.setItem("products", JSON.stringify(products));
 
 			// Volver a renderizar la vista
@@ -137,6 +124,10 @@ function renderCart() {
 		});
 	});
 }
+
+btnBack.addEventListener("click", () => {
+	localStorage.removeItem("cart");
+});
 
 // Llama a la función `renderCart` cuando la página se carga
 document.addEventListener("DOMContentLoaded", renderCart);
