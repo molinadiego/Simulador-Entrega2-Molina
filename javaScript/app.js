@@ -1,10 +1,11 @@
+let products = [];
 let cart = [];
 let tax = 0;
 let priceTotal = 0;
 let priceTotalWithTax = 0;
 let priceWithDiscount = 0;
 
-let products = [
+/*let products = [
 	{
 		id: 1,
 		name: "Unanime",
@@ -85,7 +86,7 @@ let products = [
 		price: 175,
 		stock: 25,
 	},
-];
+];*/
 
 // Simulador entrega #1.
 //const btnAddCart = document.querySelectorAll(".add-to-cart-btn");
@@ -93,16 +94,104 @@ const cartQty = document.querySelector(".cart-btn");
 const cartBtn = document.querySelector(".cart-btn");
 const txtSearch = document.getElementById("txtSearch");
 const btnSearch = document.getElementById("btnSearch");
+const btnAdd = document.getElementById("btnAdd");
 
 let qty = 0;
 
-getproductsFromStorage();
-getCartFromStorage();
+//getproductsFromStorage();
+//getCartFromStorage();
 
 function getproductsFromStorage() {
+	//Verifico si esta products en local storage, si no genero el array de productos.
 	const productsFromStorage = localStorage.getItem("products");
 	if (productsFromStorage) {
 		products = JSON.parse(productsFromStorage);
+		return products;
+	} else {
+		products = [
+			{
+				id: 1,
+				name: "Unanime",
+				image: "images/unanime.webp",
+				description: "Vino",
+				price: 23,
+				stock: 25,
+			},
+			{
+				id: 2,
+				name: "Catena Zapata",
+				image: "images/catena-zapata.webp",
+				description: "Vino",
+				price: 34,
+				stock: 25,
+			},
+			{
+				id: 3,
+				name: "Norton",
+				image: "images/norton.webp",
+				description: "Vino",
+				price: 17,
+				stock: 25,
+			},
+			{
+				id: 4,
+				name: "Phebus",
+				image: "images/phebus.webp",
+				description: "Vino",
+				price: 10,
+				stock: 25,
+			},
+			{
+				id: 5,
+				name: "Ed Edmundo",
+				image: "images/ed-edmundo.webp",
+				description: "Vino",
+				price: 12,
+				stock: 25,
+			},
+			{
+				id: 6,
+				name: "Chivas Regal 12 Years",
+				image: "images/chivas12.webp",
+				description: "Whisky",
+				price: 40,
+				stock: 25,
+			},
+			{
+				id: 7,
+				name: "Chivas Regal 18 Years",
+				image: "images/chivas18.jpg",
+				description: "Whisky",
+				price: 165,
+				stock: 25,
+			},
+			{
+				id: 8,
+				name: "Johnnie Walker Black Label",
+				image: "images/johnnie-black.webp",
+				description: "Whisky",
+				price: 33,
+				stock: 25,
+			},
+			{
+				id: 9,
+				name: "Johnnie Walker Green Label",
+				image: "images/johnnie-green.webp",
+				description: "Whisky",
+				price: 61,
+				stock: 25,
+			},
+			{
+				id: 10,
+				name: "Johnnie Walker Blue Label",
+				image: "images/johnnie-blue.webp",
+				description: "Whisky",
+				price: 175,
+				stock: 25,
+			},
+		];
+		localStorage.setItem("products", JSON.stringify(products));
+		return products;
 	}
 }
 
@@ -123,6 +212,7 @@ function getCartFromStorage() {
  * @param {String} name
  * @param {Number} quantity
  */
+
 function fillCart(name, quantity) {
 	const exist = cart.some((item) => item.name === name);
 	const product = products.find((product) => product.name === name);
@@ -256,6 +346,13 @@ cartBtn.addEventListener("click", () => {
 		cart = [];
 	}
 });
+
+btnAdd.addEventListener("click", () => {
+	window.location.href = "add-products.html";
+});
+
+products = getproductsFromStorage();
+getCartFromStorage();
 
 // Llama a esta función una vez al inicio de tu script
 document.addEventListener("DOMContentLoaded", () => {

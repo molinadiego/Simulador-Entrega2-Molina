@@ -94,6 +94,14 @@ body {
 	border-radius: 5px;
 }
 
+#btnAdd {
+	background-color: var(--primary-color);
+	color: white;
+	font-family: "Georgia", sefif;
+	padding: 0.3rem 1rem;
+	border-radius: 5px;
+}
+
 /* Banner Principal */
 .hero-banner {
 	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),

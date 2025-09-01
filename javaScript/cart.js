@@ -126,7 +126,10 @@ function renderCart() {
 }
 
 btnBack.addEventListener("click", () => {
-	localStorage.removeItem("cart");
+	if (btnBack.textContent === "Pagar") {
+		alert("Transaccion realizda con exito.");
+		localStorage.removeItem("cart");
+	}
 });
 
 // Llama a la función `renderCart` cuando la página se carga
